@@ -1,21 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilter } from '../Redux/contactsSlice';
 
-const Filter = ({ filterValue, onFilterChange }) => {
+const Filter = () => {
+  const contacts = useSelector(state => state.contacts.items) || [];
+  const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState('');
+
   const handleFilterChange = event => {
-    const newFilterValue = event.target.value;
-    onFilterChange(newFilterValue);
-    localStorage.setItem('filter', newFilterValue);
+    const { value } = event.target;
+    setInputValue(value);
+    dispatch(setFilter(value));
   };
 
   return (
     <div>
-      <h2>Contacts</h2>
-      <input
-        type="text"
-        name="filter"
-        value={filterValue}
-        onChange={handleFilterChange}
-      />
+      <label>
+        Filter contacts:
+        <input type="text" value={inputValue} onChange={handleFilterChange} />
+      </label>
+      <ul>
+        {contacts
+          ? contacts
+              .filter(contact =>
+                contact.name.toLowerCase().includes(inputValue.toLowerCase())
+              )
+              .map(contact => (
+                <li key={contact.id}>
+                  {contact.name}: {contact.number}
+                </li>
+              ))
+          : null}
+      </ul>
     </div>
   );
 };

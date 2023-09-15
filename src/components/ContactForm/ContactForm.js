@@ -1,37 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../Redux/contactsSlice';
 
-const ContactForm = ({ name, number, onNameChange, onNumberChange, onAddContact }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const handleNameChange = event => {
+    setName(event.target.value);
+  };
+
+  const handleNumberChange = event => {
+    setNumber(event.target.value);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    if (name.trim() === '' || number.trim() === '') return;
+
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    dispatch(addContact(newContact));
+    setName('');
+    setNumber('');
+  };
+
   return (
-    <form onSubmit={onAddContact}>
+    <form onSubmit={handleSubmit}>
       <div>
         <label>
-          <span className="label-text">Name:</span>
-          <input
-            type="text"
-            name="name"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            value={name}
-            onChange={onNameChange}
-            className="contact-input"
-          />
+          Name:
+          <input type="text" value={name} onChange={handleNameChange} />
         </label>
       </div>
       <div>
         <label>
-          <span className="label-text">Phone Number:</span>
-          <input
-            type="tel"
-            name="number"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            value={number}
-            onChange={onNumberChange}
-            className="contact-input"
-          />
+          Phone Number:
+          <input type="text" value={number} onChange={handleNumberChange} />
         </label>
       </div>
-      <button type="submit" className="add-button">Add Contact</button>
+      <div>
+        <button type="submit">Add Contact</button>
+      </div>
     </form>
   );
 };
