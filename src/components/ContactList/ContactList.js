@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Contact from './Contact';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts.items) || [];
+  const contacts = useSelector(state => state.items) || [];
 
   return (
     <ul>
