@@ -6,6 +6,7 @@ import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -21,7 +22,5 @@ const App = () => {
     </Provider>
   );
 };
-
-
 
 export default App;

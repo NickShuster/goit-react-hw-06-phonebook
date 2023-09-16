@@ -21,16 +21,14 @@ const Filter = () => {
       </label>
       <ul>
         {contacts
-          ? contacts
-              .filter(contact =>
-                contact.name.toLowerCase().includes(inputValue.toLowerCase())
-              )
-              .map(contact => (
-                <li key={contact.id}>
-                  {contact.name}: {contact.number}
-                </li>
-              ))
-          : null}
+          .filter(contact =>
+            contact.name.toLowerCase().includes(inputValue.toLowerCase())
+          )
+          .map(contact => (
+            <li key={contact.id}>
+              {contact.name}: {contact.number}
+            </li>
+          ))}
       </ul>
     </div>
   );

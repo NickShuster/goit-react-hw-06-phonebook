@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../Redux/contactsSlice';
-
-
+import { store } from '../Redux/store';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [error, setError] = useState(null);
 
   const handleNameChange = event => {
     setName(event.target.value);
@@ -18,21 +18,27 @@ const ContactForm = () => {
     setNumber(event.target.value);
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
     if (name.trim() === '' || number.trim() === '') return;
 
+    try {
+      const newContact = {
+        id: nanoid(),
+        name,
+        number,
+      };
 
-    
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
+      await dispatch(addContact(newContact));
 
-    dispatch(addContact(newContact));
-    setName('');
-    setNumber('');
+      console.log('Поточний стан стору:', store.getState());
+
+      setName('');
+      setNumber('');
+      setError(null);
+    } catch (error) {
+      setError('Помилка при додаванні контакту');
+    }
   };
 
   return (
@@ -52,6 +58,7 @@ const ContactForm = () => {
       <div>
         <button type="submit">Add Contact</button>
       </div>
+      {error && <p>{error}</p>}
     </form>
   );
 };
