@@ -3,6 +3,8 @@ import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../Redux/contactsSlice';
 
+
+
 const ContactForm = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
@@ -20,6 +22,8 @@ const ContactForm = () => {
     event.preventDefault();
     if (name.trim() === '' || number.trim() === '') return;
 
+
+    
     const newContact = {
       id: nanoid(),
       name,
