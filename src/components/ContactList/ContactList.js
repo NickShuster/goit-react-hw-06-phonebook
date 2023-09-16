@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Contact from './Contact';
 
 const ContactList = () => {
   const contacts = useSelector(state => state.contacts.items) || [];
@@ -7,9 +8,12 @@ const ContactList = () => {
   return (
     <ul>
       {contacts.map(contact => (
-        <li key={contact.id}>
-          {contact.name}: {contact.number}
-        </li>
+        <Contact
+          key={contact.id}
+          id={contact.id}
+          name={contact.name}
+          number={contact.number}
+        />
       ))}
     </ul>
   );
