@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../Redux/contactsSlice';
-import { store } from '../Redux/store';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -10,15 +9,15 @@ const ContactForm = () => {
   const [number, setNumber] = useState('');
   const [error, setError] = useState(null);
 
-  const handleNameChange = event => {
+  const handleNameChange = (event) => {
     setName(event.target.value);
   };
 
-  const handleNumberChange = event => {
+  const handleNumberChange = (event) => {
     setNumber(event.target.value);
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (name.trim() === '' || number.trim() === '') return;
 
@@ -30,8 +29,6 @@ const ContactForm = () => {
       };
 
       await dispatch(addContact(newContact));
-
-      console.log('Поточний стан стору:', store.getState());
 
       setName('');
       setNumber('');

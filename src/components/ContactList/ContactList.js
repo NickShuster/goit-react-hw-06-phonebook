@@ -3,19 +3,30 @@ import { useSelector } from 'react-redux';
 import Contact from './Contact';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.items) || [];
+  const contacts = useSelector((state) => state.items) || [];
+  const filter = useSelector((state) => state.filter) || '';
+
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  const shouldShowList = filteredContacts.length > 0;
 
   return (
-    <ul>
-      {contacts.map(contact => (
-        <Contact
-          key={contact.id}
-          id={contact.id}
-          name={contact.name}
-          number={contact.number}
-        />
-      ))}
-    </ul>
+    <div>
+      {shouldShowList && (
+        <ul>
+          {filteredContacts.map((contact) => (
+            <Contact
+              key={contact.id}
+              id={contact.id}
+              name={contact.name}
+              number={contact.number}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 

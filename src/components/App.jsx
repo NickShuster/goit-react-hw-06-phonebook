@@ -3,9 +3,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './Redux/store';
 import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
-
+import Filter from './Filter/Filter'; 
 
 const App = () => {
   return (
@@ -16,7 +14,6 @@ const App = () => {
           <ContactForm />
           <h2>Contacts</h2>
           <Filter />
-          <ContactList />
         </div>
       </PersistGate>
     </Provider>

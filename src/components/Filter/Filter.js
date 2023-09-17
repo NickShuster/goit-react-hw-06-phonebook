@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFilter } from '../Redux/contactsSlice';
+import { setFilter, deleteContact } from '../Redux/contactsSlice';
 
 const Filter = () => {
-  const contacts = useSelector(state => state.items) || [];
+  const contacts = useSelector((state) => state.items) || [];
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState('');
 
-  const handleFilterChange = event => {
+  const handleFilterChange = (event) => {
     const { value } = event.target;
     setInputValue(value);
     dispatch(setFilter(value));
+  };
+
+  const handleDeleteContact = (contactId) => {
+    dispatch(deleteContact(contactId));
   };
 
   return (
@@ -21,12 +25,13 @@ const Filter = () => {
       </label>
       <ul>
         {contacts
-          .filter(contact =>
+          .filter((contact) =>
             contact.name.toLowerCase().includes(inputValue.toLowerCase())
           )
-          .map(contact => (
+          .map((contact) => (
             <li key={contact.id}>
               {contact.name}: {contact.number}
+              <button onClick={() => handleDeleteContact(contact.id)}>Delete</button>
             </li>
           ))}
       </ul>
@@ -35,3 +40,7 @@ const Filter = () => {
 };
 
 export default Filter;
+
+
+
+
